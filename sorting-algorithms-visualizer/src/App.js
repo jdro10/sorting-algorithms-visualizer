@@ -1,5 +1,7 @@
+import SortingVisualizer from "./components/SortingVisualizer/SortingVisualizer";
+
 function App() {
-  return <div>Hello World</div>;
+  return <SortingVisualizer />;
 }
 
 export default App;
