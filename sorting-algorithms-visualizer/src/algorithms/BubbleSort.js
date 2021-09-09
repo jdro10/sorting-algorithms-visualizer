@@ -19,6 +19,9 @@ export function bubbleSort(array) {
     }
   }
 
+  sortingSteps.push(array.slice());
+  colorSteps.push(Array(array.length).fill("green"));
+
   return [sortingSteps, colorSteps];
 }
 
