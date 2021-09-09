@@ -6,12 +6,16 @@ import Button from "react-bootstrap/Button";
 import { bubbleSort } from "../../algorithms/BubbleSort";
 
 const arrayToSort = randomArray();
-const steps = bubbleSort(arrayToSort);
+const steps = bubbleSortAlgorithm();
 const colorSteps = steps[1];
 const sortingSteps = steps[0];
 
 function randomArray() {
-  return [...Array(50)].map((_) => Math.ceil(Math.random() * 50));
+  return [...Array(50)].map((_) => 50 + Math.ceil(Math.random() * 500));
+}
+
+function bubbleSortAlgorithm() {
+  return bubbleSort(arrayToSort);
 }
 
 const SortingVisualizer = () => {
@@ -27,7 +31,7 @@ const SortingVisualizer = () => {
     if (render) {
       setTimeout(() => {
         setArray(sortingSteps[currentIndex.current]);
-      }, 1000);
+      }, 500);
 
       if (currentIndex.current + 1 < sortingSteps.length) {
         currentIndex.current++;
@@ -37,12 +41,12 @@ const SortingVisualizer = () => {
 
   return (
     <Container fluid>
-      <Button onClick={() => setRender(!render)}> Start/Stop</Button>
+      <Button onClick={() => setRender(!render)}>Start/Stop</Button>
       <Row className="justify-content-center">
         {array.map((element, index) => (
           <Bar
             key={index}
-            height={element * 10}
+            height={element}
             color={colorSteps[currentIndex.current][index]}
           />
         ))}

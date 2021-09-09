@@ -1,7 +1,13 @@
+import Nav from "./components/Nav/Nav";
 import SortingVisualizer from "./components/SortingVisualizer/SortingVisualizer";
 
 function App() {
-  return <SortingVisualizer />;
+  return (
+    <>
+      <Nav />
+      <SortingVisualizer />
+    </>
+  );
 }
 
 export default App;
