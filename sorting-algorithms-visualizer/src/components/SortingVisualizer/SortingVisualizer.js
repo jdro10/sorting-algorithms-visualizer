@@ -1,56 +1,178 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Row from "react-bootstrap/Row";
 import Bar from "../Bar/Bar";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { bubbleSort } from "../../algorithms/BubbleSort";
+import Info from "../Info/Info";
 
-const arrayToSort = randomArray();
-const steps = bubbleSortAlgorithm();
-const colorSteps = steps[1];
-const sortingSteps = steps[0];
+const NUMBER_OF_BARS = 50;
+const DEFAULT_SPEED = 1000;
+const UNSORTED_COLOR = "#DCDCDC";
+const BUTTONS_SPEED_COLOR = "danger";
+const BUTTONS_ALGORTIHMS_COLOR = "primary";
 
-function randomArray() {
-  return [...Array(50)].map((_) => 50 + Math.ceil(Math.random() * 500));
-}
+const buttonGroupStyle = {
+  marginTop: "10px",
+  display: "flex",
+  marginBottom: "10px",
+};
 
-function bubbleSortAlgorithm() {
-  return bubbleSort(arrayToSort);
-}
+const textStyle = {
+  color: "white",
+  marginTop: "50px",
+};
 
 const SortingVisualizer = () => {
-  const currentIndex = useRef(0);
-  const [render, setRender] = useState(false);
-  const [array, setArray] = useState([]);
+  const [speed, setSpeed] = useState(
+    sessionStorage.getItem("speed") === null
+      ? DEFAULT_SPEED
+      : sessionStorage.getItem("speed")
+  );
+  const [running, isRunning] = useState(false);
+  const [algorithm, setAlgorithm] = useState("");
+  const [steps, setSteps] = useState({ sortingSteps: [], colorSteps: [] });
 
   useEffect(() => {
-    if (!render && currentIndex.current === 0) {
-      setArray(sortingSteps[0]);
+    setSteps({
+      sortingSteps: generateRandomArray(),
+      colorSteps: Array(NUMBER_OF_BARS).fill(UNSORTED_COLOR),
+    });
+  }, []);
+
+  const newRandomArray = () => {
+    sessionStorage.setItem("speed", speed);
+    window.location.reload();
+  };
+
+  const generateRandomArray = () => {
+    return [...Array(NUMBER_OF_BARS)].map(
+      (_) => 50 + Math.ceil(Math.random() * 500)
+    );
+  };
+
+  const bubbleSortAnimation = async () => {
+    const bubbleSortData = bubbleSort(steps.sortingSteps);
+    const sorting = bubbleSortData[0];
+    const color = bubbleSortData[1];
+    isRunning(true);
+    setAlgorithm("Bubble sort");
+
+    setSteps({
+      sortingSteps: sorting[0],
+      colorSteps: color[0],
+    });
+
+    for (let i = 1; i < sorting.length; i++) {
+      setSteps({
+        sortingSteps: sorting[i],
+        colorSteps: color[i],
+      });
+
+      await new Promise((resolve) => setTimeout(resolve, speed));
     }
 
-    if (render) {
-      setTimeout(() => {
-        setArray(sortingSteps[currentIndex.current]);
-      }, 500);
-
-      if (currentIndex.current + 1 < sortingSteps.length) {
-        currentIndex.current++;
-      }
-    }
-  }, [render, array]);
+    isRunning(false);
+  };
 
   return (
-    <Container fluid>
-      <Button onClick={() => setRender(!render)}>Start/Stop</Button>
+    <Container>
+      <ButtonGroup style={buttonGroupStyle}>
+        <Button
+          onClick={() => newRandomArray()}
+          disabled={running}
+          variant={BUTTONS_ALGORTIHMS_COLOR}
+        >
+          New array
+        </Button>
+        <Button
+          onClick={() => bubbleSortAnimation()}
+          disabled={running}
+          variant={BUTTONS_ALGORTIHMS_COLOR}
+        >
+          Bubble sort
+        </Button>
+        <Button
+          onClick={() => bubbleSortAnimation()}
+          disabled={running}
+          variant={BUTTONS_ALGORTIHMS_COLOR}
+        >
+          Selection sort
+        </Button>
+        <Button
+          onClick={() => bubbleSortAnimation()}
+          disabled={running}
+          variant={BUTTONS_ALGORTIHMS_COLOR}
+        >
+          Insertion sort
+        </Button>
+      </ButtonGroup>
+      <Row className="text-center">
+        <h5 style={{ color: "white" }}>
+          Speed (current update speed: every {speed / 1000}s)
+        </h5>
+      </Row>
+      <ButtonGroup style={{ display: "flex" }}>
+        <Button
+          onClick={() => setSpeed((1 / 1000) * DEFAULT_SPEED)}
+          variant={BUTTONS_SPEED_COLOR}
+          disabled={running}
+        >
+          1/1000x
+        </Button>
+        <Button
+          onClick={() => setSpeed((1 / 8) * DEFAULT_SPEED)}
+          variant={BUTTONS_SPEED_COLOR}
+          disabled={running}
+        >
+          1/8x
+        </Button>
+        <Button
+          onClick={() => setSpeed((1 / 4) * DEFAULT_SPEED)}
+          variant={BUTTONS_SPEED_COLOR}
+          disabled={running}
+        >
+          1/4x
+        </Button>
+        <Button
+          onClick={() => setSpeed((1 / 2) * DEFAULT_SPEED)}
+          variant={BUTTONS_SPEED_COLOR}
+          disabled={running}
+        >
+          1/2x
+        </Button>
+        <Button
+          onClick={() => setSpeed(DEFAULT_SPEED)}
+          variant={BUTTONS_SPEED_COLOR}
+          disabled={running}
+        >
+          1x
+        </Button>
+        <Button
+          onClick={() => setSpeed(1.5 * DEFAULT_SPEED)}
+          variant={BUTTONS_SPEED_COLOR}
+          disabled={running}
+        >
+          1.5x
+        </Button>
+        <Button
+          onClick={() => setSpeed(2 * DEFAULT_SPEED)}
+          variant={BUTTONS_SPEED_COLOR}
+          disabled={running}
+        >
+          2x
+        </Button>
+      </ButtonGroup>
       <Row className="justify-content-center">
-        {array.map((element, index) => (
-          <Bar
-            key={index}
-            height={element}
-            color={colorSteps[currentIndex.current][index]}
-          />
+        {steps.sortingSteps.map((element, index) => (
+          <Bar key={index} height={element} color={steps.colorSteps[index]} />
         ))}
       </Row>
+      <Row className="text-center" style={textStyle}>
+        <h1>{algorithm}</h1>
+      </Row>
+      <Info />
     </Container>
   );
 };
