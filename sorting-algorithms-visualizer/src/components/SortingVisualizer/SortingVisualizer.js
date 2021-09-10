@@ -24,7 +24,11 @@ const textStyle = {
 };
 
 const SortingVisualizer = () => {
-  const [speed, setSpeed] = useState(DEFAULT_SPEED);
+  const [speed, setSpeed] = useState(
+    sessionStorage.getItem("speed") === null
+      ? DEFAULT_SPEED
+      : sessionStorage.getItem("speed")
+  );
   const [running, isRunning] = useState(false);
   const [algorithm, setAlgorithm] = useState("");
   const [steps, setSteps] = useState({ sortingSteps: [], colorSteps: [] });
@@ -35,6 +39,11 @@ const SortingVisualizer = () => {
       colorSteps: Array(NUMBER_OF_BARS).fill(UNSORTED_COLOR),
     });
   }, []);
+
+  const newRandomArray = () => {
+    sessionStorage.setItem("speed", speed);
+    window.location.reload();
+  };
 
   const generateRandomArray = () => {
     return [...Array(NUMBER_OF_BARS)].map(
@@ -70,12 +79,7 @@ const SortingVisualizer = () => {
     <Container>
       <ButtonGroup style={buttonGroupStyle}>
         <Button
-          onClick={() =>
-            setSteps({
-              sortingSteps: generateRandomArray(),
-              colorSteps: Array(NUMBER_OF_BARS).fill(UNSORTED_COLOR),
-            })
-          }
+          onClick={() => newRandomArray()}
           disabled={running}
           variant={BUTTONS_ALGORTIHMS_COLOR}
         >
@@ -110,11 +114,11 @@ const SortingVisualizer = () => {
       </Row>
       <ButtonGroup style={{ display: "flex" }}>
         <Button
-          onClick={() => setSpeed((1 / 50) * DEFAULT_SPEED)}
+          onClick={() => setSpeed((1 / 1000) * DEFAULT_SPEED)}
           variant={BUTTONS_SPEED_COLOR}
           disabled={running}
         >
-          1/50x
+          1/1000x
         </Button>
         <Button
           onClick={() => setSpeed((1 / 8) * DEFAULT_SPEED)}
