@@ -1,5 +1,13 @@
+import Nav from "./components/Nav/Nav";
+import SortingVisualizer from "./components/SortingVisualizer/SortingVisualizer";
+
 function App() {
-  return <div>Hello World</div>;
+  return (
+    <>
+      <Nav />
+      <SortingVisualizer />
+    </>
+  );
 }
 
 export default App;
