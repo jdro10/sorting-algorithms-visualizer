@@ -7,13 +7,13 @@ export function bubbleSort(array) {
 
   for (let i = 0; i < array.length - 1; i++) {
     for (let j = 0; j < array.length - i - 1; j++) {
-      algorithmSteps(array.slice(), array.length, i, j, "#D00000");
+      algorithmSteps(array.slice(), array.length, i, j, "#b30000");
       if (array[j] > array[j + 1]) {
         let temp = array[j];
         array[j] = array[j + 1];
         array[j + 1] = temp;
 
-        algorithmSteps(array.slice(), array.length, i, j, "#0099FF");
+        algorithmSteps(array.slice(), array.length, i, j, "#1E90FF");
       }
     }
   }
