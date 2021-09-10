@@ -81,7 +81,6 @@ const SortingVisualizer = () => {
       <ButtonGroup style={buttonGroupStyle}>
         <Button
           onClick={() => newRandomArray()}
-          disabled={running}
           variant={BUTTONS_ALGORTIHMS_COLOR}
         >
           New array

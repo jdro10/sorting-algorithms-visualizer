@@ -29,7 +29,7 @@ const Info = () => {
               backgroundColor: "#b30000",
             }}
           />{" "}
-          Comparisons
+          Comparison
         </Col>
         <Col style={textColor} xs="auto">
           <div
