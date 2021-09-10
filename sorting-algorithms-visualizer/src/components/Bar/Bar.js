@@ -7,7 +7,7 @@ const Bar = ({ height, color }) => {
     height: height + "px",
     borderRadius: "15px",
     backgroundColor: color,
-    marginTop: 650 - height + "px",
+    marginTop: 600 - height + "px",
     marginRight: "1px",
   };
 
