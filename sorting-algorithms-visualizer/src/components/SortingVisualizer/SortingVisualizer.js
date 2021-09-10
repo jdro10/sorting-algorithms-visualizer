@@ -5,6 +5,7 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { bubbleSort } from "../../algorithms/BubbleSort";
+import Info from "../Info/Info";
 
 const NUMBER_OF_BARS = 50;
 const DEFAULT_SPEED = 1000;
@@ -171,6 +172,7 @@ const SortingVisualizer = () => {
       <Row className="text-center" style={textStyle}>
         <h1>{algorithm}</h1>
       </Row>
+      <Info />
     </Container>
   );
 };
