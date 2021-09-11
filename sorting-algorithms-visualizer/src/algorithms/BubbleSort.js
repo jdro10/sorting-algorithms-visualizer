@@ -1,4 +1,4 @@
-import { Colors } from "../helpers/Helper";
+import { Colors } from "../helpers/Colors";
 
 const colorSteps = [];
 const sortingSteps = [];
