@@ -4,9 +4,10 @@ import Bar from "../Bar/Bar";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import { bubbleSort } from "../../algorithms/BubbleSort";
 import Info from "../Info/Info";
+import { bubbleSort } from "../../algorithms/BubbleSort";
 import { insertionSort } from "../../algorithms/InsertionSort";
+import { selectionSort } from "../../algorithms/SelectionSort";
 
 const NUMBER_OF_BARS = 50;
 const DEFAULT_SPEED = 1000;
@@ -98,6 +99,28 @@ const SortingVisualizer = () => {
     }
   };
 
+  const selectionSortAnimation = async () => {
+    const selectionSortData = selectionSort(steps.sortingSteps);
+    const sorting = selectionSortData[0];
+    const color = selectionSortData[1];
+    isRunning(true);
+    setAlgorithm("Selection sort");
+
+    setSteps({
+      sortingSteps: sorting[0],
+      colorSteps: color[0],
+    });
+
+    for (let i = 1; i < sorting.length; i++) {
+      setSteps({
+        sortingSteps: sorting[i],
+        colorSteps: color[i],
+      });
+
+      await new Promise((resolve) => setTimeout(resolve, speed));
+    }
+  };
+
   return (
     <Container>
       <ButtonGroup style={buttonGroupStyle}>
@@ -122,7 +145,7 @@ const SortingVisualizer = () => {
           Insertion sort
         </Button>
         <Button
-          onClick={() => bubbleSortAnimation()}
+          onClick={() => selectionSortAnimation()}
           disabled={running}
           variant={BUTTONS_ALGORTIHMS_COLOR}
         >

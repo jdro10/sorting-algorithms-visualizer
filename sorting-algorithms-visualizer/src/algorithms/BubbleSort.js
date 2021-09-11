@@ -9,13 +9,13 @@ export function bubbleSort(array) {
 
   for (let i = 0; i < array.length - 1; i++) {
     for (let j = 0; j < array.length - i - 1; j++) {
-      algorithmSteps(array.slice(), array.length, i, j, Colors.RED);
+      algorithmSteps(array.slice(), i, j, Colors.RED);
       if (array[j] > array[j + 1]) {
         let temp = array[j];
         array[j] = array[j + 1];
         array[j + 1] = temp;
 
-        algorithmSteps(array.slice(), array.length, i, j, Colors.BLUE);
+        algorithmSteps(array.slice(), i, j, Colors.BLUE);
       }
     }
   }
@@ -26,13 +26,13 @@ export function bubbleSort(array) {
   return [sortingSteps, colorSteps];
 }
 
-function algorithmSteps(array, arrayLength, iteration, currentIndex, color) {
-  const currentArray = Array(arrayLength - iteration).fill(Colors.WHITE);
+function algorithmSteps(array, iteration, currentIndex, color) {
+  const currentArray = Array(array.length - iteration).fill(Colors.WHITE);
 
   currentArray[currentIndex] = color;
   currentArray[currentIndex + 1] = color;
 
-  const sortedPositions = Array(arrayLength - (array.length - iteration)).fill(
+  const sortedPositions = Array(array.length - (array.length - iteration)).fill(
     Colors.GREEN
   );
 
