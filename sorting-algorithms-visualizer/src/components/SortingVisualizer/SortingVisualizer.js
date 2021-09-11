@@ -119,14 +119,14 @@ const SortingVisualizer = () => {
           disabled={running}
           variant={BUTTONS_ALGORTIHMS_COLOR}
         >
-          Selection sort
+          Insertion sort
         </Button>
         <Button
           onClick={() => bubbleSortAnimation()}
           disabled={running}
           variant={BUTTONS_ALGORTIHMS_COLOR}
         >
-          Insertion sort
+          Selection sort
         </Button>
       </ButtonGroup>
       <Row className="text-center">
