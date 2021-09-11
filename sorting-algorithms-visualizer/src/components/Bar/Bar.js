@@ -5,7 +5,8 @@ const Bar = ({ height, color }) => {
   const columnStyle = {
     width: "10px",
     height: height + "px",
-    borderRadius: "15px",
+    borderTopLeftRadius: "15px",
+    borderTopRightRadius: "15px",
     backgroundColor: color,
     marginTop: 600 - height + "px",
     marginRight: "1px",

@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { bubbleSort } from "../../algorithms/BubbleSort";
 import Info from "../Info/Info";
+import { insertionSort } from "../../algorithms/InsertionSort";
 
 const NUMBER_OF_BARS = 50;
 const DEFAULT_SPEED = 1000;
@@ -42,6 +43,7 @@ const SortingVisualizer = () => {
   }, []);
 
   const newRandomArray = () => {
+    isRunning(false);
     sessionStorage.setItem("speed", speed);
     window.location.reload();
   };
@@ -72,8 +74,28 @@ const SortingVisualizer = () => {
 
       await new Promise((resolve) => setTimeout(resolve, speed));
     }
+  };
 
-    isRunning(false);
+  const insertionSortAnimation = async () => {
+    const insertionSortData = insertionSort(steps.sortingSteps);
+    const sorting = insertionSortData[0];
+    const color = insertionSortData[1];
+    isRunning(true);
+    setAlgorithm("Insertion sort");
+
+    setSteps({
+      sortingSteps: sorting[0],
+      colorSteps: color[0],
+    });
+
+    for (let i = 1; i < sorting.length; i++) {
+      setSteps({
+        sortingSteps: sorting[i],
+        colorSteps: color[i],
+      });
+
+      await new Promise((resolve) => setTimeout(resolve, speed));
+    }
   };
 
   return (
@@ -81,7 +103,6 @@ const SortingVisualizer = () => {
       <ButtonGroup style={buttonGroupStyle}>
         <Button
           onClick={() => newRandomArray()}
-          disabled={running}
           variant={BUTTONS_ALGORTIHMS_COLOR}
         >
           New array
@@ -94,7 +115,7 @@ const SortingVisualizer = () => {
           Bubble sort
         </Button>
         <Button
-          onClick={() => bubbleSortAnimation()}
+          onClick={() => insertionSortAnimation()}
           disabled={running}
           variant={BUTTONS_ALGORTIHMS_COLOR}
         >
