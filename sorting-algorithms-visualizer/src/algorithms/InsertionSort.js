@@ -30,7 +30,7 @@ function algorithmSteps(array, arrayLength, iteration, currentIndex, color) {
   const currentArray = Array(arrayLength).fill(Colors.WHITE);
   const sortedPositions = Array(iteration).fill(Colors.GREEN);
 
-  sortedPositions[iteration] = Colors.RED;
+  sortedPositions[iteration] = Colors.GREY;
   sortedPositions[currentIndex] = color;
   sortedPositions[currentIndex + 1] = color;
 
