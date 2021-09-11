@@ -12,10 +12,10 @@ export function insertionSort(array) {
     let j = i - 1;
 
     while (j >= 0 && array[j] > firstUnsorted) {
-      algorithmSteps(array.slice(), array.length, i, j, Colors.RED);
+      algorithmSteps(array.slice(), i, j, Colors.RED);
       array[j + 1] = array[j];
       array[j] = firstUnsorted;
-      algorithmSteps(array.slice(), array.length, i, j, Colors.BLUE);
+      algorithmSteps(array.slice(), i, j, Colors.BLUE);
       j--;
     }
   }
@@ -26,11 +26,11 @@ export function insertionSort(array) {
   return [sortingSteps, colorSteps];
 }
 
-function algorithmSteps(array, arrayLength, iteration, currentIndex, color) {
-  const currentArray = Array(arrayLength).fill(Colors.WHITE);
+function algorithmSteps(array, iteration, currentIndex, color) {
+  const currentArray = Array(array.length).fill(Colors.WHITE);
   const sortedPositions = Array(iteration).fill(Colors.GREEN);
 
-  sortedPositions[iteration] = Colors.RED;
+  sortedPositions[iteration] = Colors.GREY;
   sortedPositions[currentIndex] = color;
   sortedPositions[currentIndex + 1] = color;
 
