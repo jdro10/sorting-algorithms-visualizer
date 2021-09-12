@@ -29,7 +29,7 @@ export function selectionSort(array) {
   sortingSteps.push(array.slice());
   colorSteps.push(Array(array.length).fill(Colors.GREEN));
 
-  return [sortingSteps, colorSteps];
+  return ["Selection Sort", sortingSteps, colorSteps];
 }
 
 function comparisonSteps(array, iteration, cmpIndex1, cmpIndex2, color) {

@@ -27,16 +27,21 @@ const textStyle = {
 };
 
 const SortingVisualizer = () => {
-  const [speed, setSpeed] = useState(
-    sessionStorage.getItem("speed") === null
-      ? DEFAULT_SPEED
-      : sessionStorage.getItem("speed")
-  );
   const [running, isRunning] = useState(false);
-  const [algorithm, setAlgorithm] = useState("");
-  const [steps, setSteps] = useState({ sortingSteps: [], colorSteps: [] });
+  const [speed, setSpeed] = useState(DEFAULT_SPEED);
+  const [steps, setSteps] = useState({
+    algorithmName: "",
+    sortingSteps: [],
+    colorSteps: [],
+  });
 
   useEffect(() => {
+    setSpeed(
+      sessionStorage.getItem("speed") === null
+        ? DEFAULT_SPEED
+        : sessionStorage.getItem("speed")
+    );
+
     setSteps({
       sortingSteps: generateRandomArray(),
       colorSteps: Array(NUMBER_OF_BARS).fill(UNSORTED_COLOR),
@@ -44,7 +49,6 @@ const SortingVisualizer = () => {
   }, []);
 
   const newRandomArray = () => {
-    isRunning(false);
     sessionStorage.setItem("speed", speed);
     window.location.reload();
   };
@@ -55,66 +59,19 @@ const SortingVisualizer = () => {
     );
   };
 
-  const bubbleSortAnimation = async () => {
-    const bubbleSortData = bubbleSort(steps.sortingSteps);
-    const sorting = bubbleSortData[0];
-    const color = bubbleSortData[1];
+  const animation = (sortAlgorithmFunction) => {
+    const data = sortAlgorithmFunction(steps.sortingSteps);
+
     isRunning(true);
-    setAlgorithm("Bubble sort");
-
-    setSteps({
-      sortingSteps: sorting[0],
-      colorSteps: color[0],
-    });
-
-    for (let i = 1; i < sorting.length; i++) {
-      setSteps({
-        sortingSteps: sorting[i],
-        colorSteps: color[i],
-      });
-
-      await new Promise((resolve) => setTimeout(resolve, speed));
-    }
+    sortingLoop(data[0], data[1], data[2]);
   };
 
-  const insertionSortAnimation = async () => {
-    const insertionSortData = insertionSort(steps.sortingSteps);
-    const sorting = insertionSortData[0];
-    const color = insertionSortData[1];
-    isRunning(true);
-    setAlgorithm("Insertion sort");
-
-    setSteps({
-      sortingSteps: sorting[0],
-      colorSteps: color[0],
-    });
-
-    for (let i = 1; i < sorting.length; i++) {
+  const sortingLoop = async (name, sortSteps, colorSteps) => {
+    for (let i = 0; i < sortSteps.length; i++) {
       setSteps({
-        sortingSteps: sorting[i],
-        colorSteps: color[i],
-      });
-
-      await new Promise((resolve) => setTimeout(resolve, speed));
-    }
-  };
-
-  const selectionSortAnimation = async () => {
-    const selectionSortData = selectionSort(steps.sortingSteps);
-    const sorting = selectionSortData[0];
-    const color = selectionSortData[1];
-    isRunning(true);
-    setAlgorithm("Selection sort");
-
-    setSteps({
-      sortingSteps: sorting[0],
-      colorSteps: color[0],
-    });
-
-    for (let i = 1; i < sorting.length; i++) {
-      setSteps({
-        sortingSteps: sorting[i],
-        colorSteps: color[i],
+        algorithmName: name,
+        sortingSteps: sortSteps[i],
+        colorSteps: colorSteps[i],
       });
 
       await new Promise((resolve) => setTimeout(resolve, speed));
@@ -131,21 +88,21 @@ const SortingVisualizer = () => {
           New array
         </Button>
         <Button
-          onClick={() => bubbleSortAnimation()}
+          onClick={() => animation(bubbleSort)}
           disabled={running}
           variant={BUTTONS_ALGORTIHMS_COLOR}
         >
           Bubble sort
         </Button>
         <Button
-          onClick={() => insertionSortAnimation()}
+          onClick={() => animation(insertionSort)}
           disabled={running}
           variant={BUTTONS_ALGORTIHMS_COLOR}
         >
           Insertion sort
         </Button>
         <Button
-          onClick={() => selectionSortAnimation()}
+          onClick={() => animation(selectionSort)}
           disabled={running}
           variant={BUTTONS_ALGORTIHMS_COLOR}
         >
@@ -214,7 +171,7 @@ const SortingVisualizer = () => {
         ))}
       </Row>
       <Row className="text-center" style={textStyle}>
-        <h1>{algorithm}</h1>
+        <h1>{steps.algorithmName}</h1>
       </Row>
       <Info />
     </Container>

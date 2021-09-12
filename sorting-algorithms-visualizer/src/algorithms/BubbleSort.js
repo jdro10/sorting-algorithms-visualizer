@@ -23,7 +23,7 @@ export function bubbleSort(array) {
   sortingSteps.push(array.slice());
   colorSteps.push(Array(array.length).fill(Colors.GREEN));
 
-  return [sortingSteps, colorSteps];
+  return ["Bubble Sort", sortingSteps, colorSteps];
 }
 
 function algorithmSteps(array, iteration, currentIndex, color) {

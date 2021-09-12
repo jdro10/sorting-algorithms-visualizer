@@ -23,7 +23,7 @@ export function insertionSort(array) {
   sortingSteps.push(array.slice());
   colorSteps.push(Array(array.length).fill(Colors.GREEN));
 
-  return [sortingSteps, colorSteps];
+  return ["Insertion sort", sortingSteps, colorSteps];
 }
 
 function algorithmSteps(array, iteration, currentIndex, color) {
