@@ -13,8 +13,10 @@ export function insertionSort(array) {
 
     while (j >= 0 && array[j] > firstUnsorted) {
       algorithmSteps(array.slice(), i, j, Colors.RED);
+
       array[j + 1] = array[j];
       array[j] = firstUnsorted;
+
       algorithmSteps(array.slice(), i, j, Colors.BLUE);
       j--;
     }
