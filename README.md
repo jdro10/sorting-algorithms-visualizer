@@ -37,3 +37,8 @@ npm start
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jorgedroliveira10/)
 </div>
 
+
+### License
+
+ [![GitHub license](https://img.shields.io/github/license/jdro10/sorting-algorithms-visualizer.svg)](https://github.com/jdro10/sorting-algorithms-visualizer/blob/master/LICENSE)
+
