@@ -5,15 +5,16 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Info from "../Info/Info";
+import Slider from "react-input-slider";
 import { bubbleSort } from "../../algorithms/BubbleSort";
 import { insertionSort } from "../../algorithms/InsertionSort";
 import { selectionSort } from "../../algorithms/SelectionSort";
+import { mergeSortAlgorithm } from "../../algorithms/MergeSort";
 
 const NUMBER_OF_BARS = 50;
 const DEFAULT_SPEED = 1000;
 const UNSORTED_COLOR = "#DCDCDC";
-const BUTTONS_SPEED_COLOR = "danger";
-const BUTTONS_ALGORTIHMS_COLOR = "primary";
+const BUTTONS_ALGORTIHMS_COLOR = "danger";
 
 const buttonGroupStyle = {
   marginTop: "10px",
@@ -108,63 +109,31 @@ const SortingVisualizer = () => {
         >
           Selection sort
         </Button>
+        <Button
+          onClick={() => animation(mergeSortAlgorithm)}
+          disabled={running}
+          variant={BUTTONS_ALGORTIHMS_COLOR}
+        >
+          Merge sort
+        </Button>
       </ButtonGroup>
       <Row className="text-center">
         <h5 style={{ color: "white" }}>
           Speed (current update speed: every {speed / 1000}s)
         </h5>
       </Row>
-      <ButtonGroup style={{ display: "flex" }}>
-        <Button
-          onClick={() => setSpeed((1 / 1000) * DEFAULT_SPEED)}
-          variant={BUTTONS_SPEED_COLOR}
+      <div align="center">
+        <Slider
+          axis="x"
+          x={speed}
+          xmax={2000}
+          xmin={10}
+          xstep={10}
+          onChange={({ x }) => setSpeed(x)}
           disabled={running}
-        >
-          1/1000x
-        </Button>
-        <Button
-          onClick={() => setSpeed((1 / 8) * DEFAULT_SPEED)}
-          variant={BUTTONS_SPEED_COLOR}
-          disabled={running}
-        >
-          1/8x
-        </Button>
-        <Button
-          onClick={() => setSpeed((1 / 4) * DEFAULT_SPEED)}
-          variant={BUTTONS_SPEED_COLOR}
-          disabled={running}
-        >
-          1/4x
-        </Button>
-        <Button
-          onClick={() => setSpeed((1 / 2) * DEFAULT_SPEED)}
-          variant={BUTTONS_SPEED_COLOR}
-          disabled={running}
-        >
-          1/2x
-        </Button>
-        <Button
-          onClick={() => setSpeed(DEFAULT_SPEED)}
-          variant={BUTTONS_SPEED_COLOR}
-          disabled={running}
-        >
-          1x
-        </Button>
-        <Button
-          onClick={() => setSpeed(1.5 * DEFAULT_SPEED)}
-          variant={BUTTONS_SPEED_COLOR}
-          disabled={running}
-        >
-          1.5x
-        </Button>
-        <Button
-          onClick={() => setSpeed(2 * DEFAULT_SPEED)}
-          variant={BUTTONS_SPEED_COLOR}
-          disabled={running}
-        >
-          2x
-        </Button>
-      </ButtonGroup>
+        />
+      </div>
+
       <Row className="justify-content-center">
         {steps.sortingSteps.map((element, index) => (
           <Bar key={index} height={element} color={steps.colorSteps[index]} />
