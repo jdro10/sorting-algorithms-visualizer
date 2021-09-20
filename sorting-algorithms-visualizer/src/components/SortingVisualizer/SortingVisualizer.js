@@ -4,16 +4,16 @@ import Bar from "../Bar/Bar";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import Info from "../Info/Info";
+import Slider from "react-input-slider";
 import { bubbleSort } from "../../algorithms/BubbleSort";
 import { insertionSort } from "../../algorithms/InsertionSort";
 import { selectionSort } from "../../algorithms/SelectionSort";
+import { mergeSortAlgorithm } from "../../algorithms/MergeSort";
 
 const NUMBER_OF_BARS = 50;
-const DEFAULT_SPEED = 1000;
+const DEFAULT_SPEED = 250;
 const UNSORTED_COLOR = "#DCDCDC";
-const BUTTONS_SPEED_COLOR = "danger";
-const BUTTONS_ALGORTIHMS_COLOR = "primary";
+const BUTTONS_ALGORTIHMS_COLOR = "danger";
 
 const buttonGroupStyle = {
   marginTop: "10px",
@@ -37,9 +37,9 @@ const SortingVisualizer = () => {
 
   useEffect(() => {
     setSpeed(
-      sessionStorage.getItem("speed") === null
+      localStorage.getItem("speed") === null
         ? DEFAULT_SPEED
-        : sessionStorage.getItem("speed")
+        : localStorage.getItem("speed")
     );
 
     setSteps({
@@ -48,15 +48,22 @@ const SortingVisualizer = () => {
     });
   }, []);
 
+  const saveSpeedToLocalStorage = (x) => {
+    localStorage.setItem("speed", x);
+  };
+
   const newRandomArray = () => {
-    sessionStorage.setItem("speed", speed);
     window.location.reload();
   };
 
   const generateRandomArray = () => {
-    return [...Array(NUMBER_OF_BARS)].map(
-      (_) => 50 + Math.ceil(Math.random() * 500)
-    );
+    const numbers = new Set();
+
+    while (numbers.size !== 50) {
+      numbers.add(Math.floor(Math.random() * 500) + 50);
+    }
+
+    return Array.from(numbers);
   };
 
   const animation = (sortAlgorithmFunction) => {
@@ -108,63 +115,34 @@ const SortingVisualizer = () => {
         >
           Selection sort
         </Button>
+        <Button
+          onClick={() => animation(mergeSortAlgorithm)}
+          disabled={running}
+          variant={BUTTONS_ALGORTIHMS_COLOR}
+        >
+          Merge sort
+        </Button>
       </ButtonGroup>
       <Row className="text-center">
         <h5 style={{ color: "white" }}>
-          Speed (current update speed: every {speed / 1000}s)
+          Speed (current update speed: every {speed} ms)
         </h5>
       </Row>
-      <ButtonGroup style={{ display: "flex" }}>
-        <Button
-          onClick={() => setSpeed((1 / 1000) * DEFAULT_SPEED)}
-          variant={BUTTONS_SPEED_COLOR}
+      <div align="center">
+        <Slider
+          axis="x"
+          x={speed}
+          xmax={1000}
+          xmin={10}
+          xstep={10}
+          onChange={({ x }) => {
+            setSpeed(x);
+            saveSpeedToLocalStorage(x);
+          }}
           disabled={running}
-        >
-          1/1000x
-        </Button>
-        <Button
-          onClick={() => setSpeed((1 / 8) * DEFAULT_SPEED)}
-          variant={BUTTONS_SPEED_COLOR}
-          disabled={running}
-        >
-          1/8x
-        </Button>
-        <Button
-          onClick={() => setSpeed((1 / 4) * DEFAULT_SPEED)}
-          variant={BUTTONS_SPEED_COLOR}
-          disabled={running}
-        >
-          1/4x
-        </Button>
-        <Button
-          onClick={() => setSpeed((1 / 2) * DEFAULT_SPEED)}
-          variant={BUTTONS_SPEED_COLOR}
-          disabled={running}
-        >
-          1/2x
-        </Button>
-        <Button
-          onClick={() => setSpeed(DEFAULT_SPEED)}
-          variant={BUTTONS_SPEED_COLOR}
-          disabled={running}
-        >
-          1x
-        </Button>
-        <Button
-          onClick={() => setSpeed(1.5 * DEFAULT_SPEED)}
-          variant={BUTTONS_SPEED_COLOR}
-          disabled={running}
-        >
-          1.5x
-        </Button>
-        <Button
-          onClick={() => setSpeed(2 * DEFAULT_SPEED)}
-          variant={BUTTONS_SPEED_COLOR}
-          disabled={running}
-        >
-          2x
-        </Button>
-      </ButtonGroup>
+        />
+      </div>
+
       <Row className="justify-content-center">
         {steps.sortingSteps.map((element, index) => (
           <Bar key={index} height={element} color={steps.colorSteps[index]} />
@@ -173,7 +151,6 @@ const SortingVisualizer = () => {
       <Row className="text-center" style={textStyle}>
         <h1>{steps.algorithmName}</h1>
       </Row>
-      <Info />
     </Container>
   );
 };
