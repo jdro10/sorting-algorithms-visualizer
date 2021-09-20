@@ -38,9 +38,9 @@ const SortingVisualizer = () => {
 
   useEffect(() => {
     setSpeed(
-      sessionStorage.getItem("speed") === null
+      localStorage.getItem("speed") === null
         ? DEFAULT_SPEED
-        : sessionStorage.getItem("speed")
+        : localStorage.getItem("speed")
     );
 
     setSteps({
@@ -49,8 +49,11 @@ const SortingVisualizer = () => {
     });
   }, []);
 
+  const saveSpeedToLocalStorage = (x) => {
+    localStorage.setItem("speed", x);
+  };
+
   const newRandomArray = () => {
-    sessionStorage.setItem("speed", speed);
     window.location.reload();
   };
 
@@ -129,7 +132,10 @@ const SortingVisualizer = () => {
           xmax={2000}
           xmin={10}
           xstep={10}
-          onChange={({ x }) => setSpeed(x)}
+          onChange={({ x }) => {
+            setSpeed(x);
+            saveSpeedToLocalStorage(x);
+          }}
           disabled={running}
         />
       </div>
