@@ -4,7 +4,6 @@ import Bar from "../Bar/Bar";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import Info from "../Info/Info";
 import Slider from "react-input-slider";
 import { bubbleSort } from "../../algorithms/BubbleSort";
 import { insertionSort } from "../../algorithms/InsertionSort";
@@ -12,7 +11,7 @@ import { selectionSort } from "../../algorithms/SelectionSort";
 import { mergeSortAlgorithm } from "../../algorithms/MergeSort";
 
 const NUMBER_OF_BARS = 50;
-const DEFAULT_SPEED = 1000;
+const DEFAULT_SPEED = 250;
 const UNSORTED_COLOR = "#DCDCDC";
 const BUTTONS_ALGORTIHMS_COLOR = "danger";
 
@@ -58,9 +57,13 @@ const SortingVisualizer = () => {
   };
 
   const generateRandomArray = () => {
-    return [...Array(NUMBER_OF_BARS)].map(
-      (_) => 50 + Math.ceil(Math.random() * 500)
-    );
+    const numbers = new Set();
+
+    while (numbers.size !== 50) {
+      numbers.add(Math.floor(Math.random() * 500) + 50);
+    }
+
+    return Array.from(numbers);
   };
 
   const animation = (sortAlgorithmFunction) => {
@@ -122,14 +125,14 @@ const SortingVisualizer = () => {
       </ButtonGroup>
       <Row className="text-center">
         <h5 style={{ color: "white" }}>
-          Speed (current update speed: every {speed / 1000}s)
+          Speed (current update speed: every {speed} ms)
         </h5>
       </Row>
       <div align="center">
         <Slider
           axis="x"
           x={speed}
-          xmax={2000}
+          xmax={1000}
           xmin={10}
           xstep={10}
           onChange={({ x }) => {
@@ -148,7 +151,6 @@ const SortingVisualizer = () => {
       <Row className="text-center" style={textStyle}>
         <h1>{steps.algorithmName}</h1>
       </Row>
-      <Info />
     </Container>
   );
 };
