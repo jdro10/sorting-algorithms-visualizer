@@ -39,6 +39,5 @@ npm start
 
 
 ### License
-
- [![GitHub license](https://img.shields.io/github/license/jdro10/sorting-algorithms-visualizer.svg)](https://github.com/jdro10/sorting-algorithms-visualizer/blob/master/LICENSE)
+ [![GitHub license](https://img.shields.io/github/license/jdro10/f1-data.svg)](https://github.com/jdro10/sorting-algorithms-visualizer/blob/master/LICENSE)
 
