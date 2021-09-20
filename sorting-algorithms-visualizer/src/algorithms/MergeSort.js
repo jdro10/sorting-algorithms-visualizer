@@ -92,20 +92,18 @@ function merge(array, start, middle, end) {
 }
 
 function algorithmSteps(array, k, startLeft, endLeft, startRight, endRight) {
-  const array1 = Array(array.length - startLeft).fill(Colors.WHITE);
-  const array2 = Array(startLeft).fill(Colors.LIME_GREEN);
-  const fullArray = array2.concat(array1);
+  const array1 = Array(array.length).fill(Colors.WHITE);
 
   for (let i = startLeft; i < endLeft; i++) {
-    fullArray[i] = Colors.ORANGE;
+    array1[i] = Colors.ORANGE;
   }
 
   for (let i = startRight; i < endRight + 1; i++) {
-    fullArray[i] = Colors.DARK_ORANGE;
+    array1[i] = Colors.DARK_ORANGE;
   }
 
-  fullArray[k] = Colors.RED;
+  array1[k] = Colors.RED;
 
-  colorSteps.push(fullArray);
+  colorSteps.push(array1);
   sortingSteps.push(array.slice());
 }

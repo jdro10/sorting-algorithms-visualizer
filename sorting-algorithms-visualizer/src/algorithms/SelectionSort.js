@@ -11,11 +11,11 @@ export function selectionSort(array) {
     let min = i;
 
     for (let j = i + 1; j < array.length; j++) {
-      comparisonSteps(array.slice(), i, min, j, Colors.RED);
+      comparisonSteps(array.slice(), min, j, Colors.RED);
 
       if (array[j] < array[min]) {
         min = j;
-        comparisonSteps(array.slice(), i, min, j, Colors.RED);
+        comparisonSteps(array.slice(), min, j, Colors.RED);
       }
     }
 
@@ -23,7 +23,7 @@ export function selectionSort(array) {
     array[i] = array[min];
     array[min] = tmp;
 
-    comparisonSteps(array.slice(), i, i, min, Colors.BLUE);
+    comparisonSteps(array.slice(), i, min, Colors.BLUE);
   }
 
   sortingSteps.push(array.slice());
@@ -32,16 +32,12 @@ export function selectionSort(array) {
   return ["Selection Sort", sortingSteps, colorSteps];
 }
 
-function comparisonSteps(array, iteration, cmpIndex1, cmpIndex2, color) {
-  const currentArray = Array(array.length - iteration).fill(Colors.WHITE);
+function comparisonSteps(array, cmpIndex1, cmpIndex2, color) {
+  const array1 = Array(array.length).fill(Colors.WHITE);
 
-  currentArray[cmpIndex1 - iteration] = color;
-  currentArray[cmpIndex2 - iteration] = color;
+  array1[cmpIndex1] = color;
+  array1[cmpIndex2] = color;
 
-  const sortedPositions = Array(array.length - (array.length - iteration)).fill(
-    Colors.GREEN
-  );
-
-  colorSteps.push(sortedPositions.concat(currentArray));
+  colorSteps.push(array1);
   sortingSteps.push(array.slice());
 }

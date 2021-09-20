@@ -9,10 +9,12 @@ import { bubbleSort } from "../../algorithms/BubbleSort";
 import { insertionSort } from "../../algorithms/InsertionSort";
 import { selectionSort } from "../../algorithms/SelectionSort";
 import { mergeSortAlgorithm } from "../../algorithms/MergeSort";
+import { quickSortAlgorithm } from "../../algorithms/QuickSort";
+import { Colors } from "../../helpers/Colors";
 
 const NUMBER_OF_BARS = 50;
-const DEFAULT_SPEED = 250;
-const UNSORTED_COLOR = "#DCDCDC";
+const DEFAULT_SPEED = 10;
+const UNSORTED_COLOR = Colors.WHITE;
 const BUTTONS_ALGORTIHMS_COLOR = "danger";
 
 const buttonGroupStyle = {
@@ -121,6 +123,13 @@ const SortingVisualizer = () => {
           variant={BUTTONS_ALGORTIHMS_COLOR}
         >
           Merge sort
+        </Button>
+        <Button
+          onClick={() => animation(quickSortAlgorithm)}
+          disabled={running}
+          variant={BUTTONS_ALGORTIHMS_COLOR}
+        >
+          Quick sort
         </Button>
       </ButtonGroup>
       <Row className="text-center">

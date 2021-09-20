@@ -28,15 +28,11 @@ export function bubbleSort(array) {
 }
 
 function algorithmSteps(array, iteration, currentIndex, color) {
-  const currentArray = Array(array.length - iteration).fill(Colors.WHITE);
+  const array1 = Array(array.length).fill(Colors.WHITE);
 
-  currentArray[currentIndex] = color;
-  currentArray[currentIndex + 1] = color;
+  array1[currentIndex] = color;
+  array1[currentIndex + 1] = color;
 
-  const sortedPositions = Array(array.length - (array.length - iteration)).fill(
-    Colors.GREEN
-  );
-
-  colorSteps.push(currentArray.concat(sortedPositions));
+  colorSteps.push(array1);
   sortingSteps.push(array.slice());
 }
