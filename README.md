@@ -1,6 +1,6 @@
 <h1 align="center">Sorting Algorithms Visualizer</h1>
 
-Visualizer of well known sorting algorithms. (https://jdro10.github.io/sorting-algorithms-visualizer)
+A visualization tool for sorting algorithms. (https://jdro10.github.io/sorting-algorithms-visualizer)
 
 ### Features
 * Bubble sort
