@@ -29,13 +29,12 @@ export function insertionSort(array) {
 }
 
 function algorithmSteps(array, iteration, currentIndex, color) {
-  const currentArray = Array(array.length).fill(Colors.WHITE);
-  const sortedPositions = Array(iteration).fill(Colors.GREEN);
+  const array1 = Array(array.length).fill(Colors.WHITE);
 
-  sortedPositions[iteration] = Colors.GREY;
-  sortedPositions[currentIndex] = color;
-  sortedPositions[currentIndex + 1] = color;
+  array1[iteration] = Colors.GREY;
+  array1[currentIndex] = color;
+  array1[currentIndex + 1] = color;
 
-  colorSteps.push(sortedPositions.concat(currentArray));
+  colorSteps.push(array1);
   sortingSteps.push(array.slice());
 }
